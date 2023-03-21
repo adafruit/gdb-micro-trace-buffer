@@ -51,12 +51,12 @@ class MicroTraceBuffer (gdb.Command):
       base = int(base)
 
       position += base
-      mtb_address = long(mtb.value().address)
+      mtb_address = int(mtb.value().address)
 
-      oldest_index = (position - mtb_address) / 4 - 1
+      oldest_index = (position - mtb_address) // 4 - 1
       repeats = 0
-      mtb_size = mtb.type.sizeof / 4
-      indices = range(oldest_index, mtb_size) + range(0, oldest_index)
+      mtb_size = mtb.type.sizeof // 4
+      indices = list(range(oldest_index, mtb_size)) + list(range(0, oldest_index))
       for i, index in enumerate(reversed(indices)):
         pc = mtb_values[index]
 
